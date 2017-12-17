@@ -14,4 +14,10 @@ https://www.easyatlas.com/: We're mapping out the data information layer of the 
 https://www.first.io/: Predicting listings from contacts pool
 
 
-HouseCanary comes closest to the opportunity that I see to predict changes in valuation due to new construction; infrastructure, subdivisions, even upzoning, though in Austin that is very rare. Much of the requisite data is public, open source, e.g. https://data.austintexas.gov/Building-and-Development/Heat-Map-of-Construction-Permits-Issued-since-2010/cc88-62x4, https://data.austintexas.gov/Building-and-Development/Construction-Permits-Issued-since-2010/d792-2sc3, et al. 
+HouseCanary comes closest to the opportunity that I see to predict changes in valuation due to new construction; infrastructure, subdivisions, even upzoning, though in Austin that is very rare. Much of the requisite data is public, open source, e.g. https://data.austintexas.gov/Building-and-Development/Heat-Map-of-Construction-Permits-Issued-since-2010/cc88-62x4, https://data.austintexas.gov/Building-and-Development/Construction-Permits-Issued-since-2010/d792-2sc3, et al.
+
+Research questions: how much detail of construction projects can be inferred from open source data e.g. infrastructure and construction permits? How closely can revenue e.g. rent be inferred from same in addition to neighborhood?
+
+Next steps: scrape permits for new construction. Research revenue history and correlate with construction to project revenues from upcoming projects.
+
+Data acquired: https://data.austintexas.gov/browse?category=Building+and+Development&limitTo=datasets
