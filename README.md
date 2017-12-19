@@ -1,5 +1,5 @@
 # Capstone
-Extant real estate data science projects and the hole in their game that I seek to fill, specifically in Austin: to wit, forecasting growth - development of new residential real estate properties by price and location.
+Forecasting Austin residential real estate price and location.
 
 www.richblockspoorblocks.com: An interactive United States map of income and rent in every city. The data comes from the American Community Survey, and each neighborhood is labeled according to a color spectrum in the map key. You can search for a specific address, city or state.
 www.zillow.com: Buy, rent, sell, estimate, mortgages, agent finder, home design
@@ -20,7 +20,7 @@ Research questions: How much detail of construction projects can be inferred fro
 
 Next steps: Scrape permits for new construction. Research revenue history and correlate with construction to project revenues from upcoming projects.
 
-Presentation seems likely via a Jupyter Notebook. Initial classification of new residential real estate as single-family, multi-family.
+Presentation via Jupyter Notebook should include text, charts, graphs. Initial classification of new residential real estate as single-family, multi-family.
 
 *Upzoning:
 http://www.mystatesman.com/news/local-govt--politics/austin-rolls-out-code-draft-questions-and-concerns-emerge/rWiVSEnMZ2g2ZZEgNISBWI/
