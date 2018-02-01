@@ -2,7 +2,12 @@
 
 
 Author: Scott Kurland
+January 2018
 
+Forecasting real estate growth and densification in Austin.
+
+
+Motivation:
 
 When people decide to move to or from a city, it’s usually of their own free will. The rise and fall of urban populations is dependent on millions of decisions that people make about their lives every day, and these are often related to longer-term policy decisions, economic climates, and political trends.
 
@@ -22,7 +27,7 @@ Hernando then investigated whether he could describe the physics of urban migrat
 
 Hernando plans to add information about cities, such as the health of companies in a region, that predict economic trends in addition to population trends. He also needs to expand the model to other cities – the 15 years of “memory” might be 25 years in the U.S., for example. But he believes his basic model is universal: “The physics laws are the same everywhere,” he says. “The physics here in Barcelona should be the same as the physics in New York City.”
 
-Right now, he’s tracking the “paradigmatic case” of Detroit’s decline, which is tied to both global and local forces in the last few decades. He is looking for other cities that show very similar population signatures in how they interact with the larger system of demographic trends: “Those cities that we find highly correlated with Detroit, will they have the same fate? We don’t know at this moment, but we hope that the development of virtual simulations will help us to understand how a system of cities behave in advance.”
+Right now, he’s tracking Detroit’s decline, which is tied to both global and local forces in the last few decades. He is looking for other cities that show very similar population signatures in how they interact with the larger system of demographic trends: “Those cities that we find highly correlated with Detroit, will they have the same fate? We don’t know at this moment, but we hope that the development of virtual simulations will help us to understand how a system of cities behave in advance.”
 
 Over a hundred people move to Austin every day; predicting the shape and density of the city has practical applications regarding utilities and infrastructure, as well as development and design; current laws enforcing 40' front yards make sprawl inevitable, for example. Austin is a forerunner of a more general trend that The World Health Organization estimates that 70 percent of the global population will live in cities and towns by 2050, up from just over 50 percent today; crossed the line in 2008. Furthermore, mid-range forecasts predict tripling the global urban land area of 2000 by 2030; the implication being that Austin will grow from its current size of 948K people and 272 square miles. The Austin metropolitan area is almost 4300 square miles, room to grow, and a population over 2 million. Austin will likely add another 114K apartments by 2030.
 
@@ -30,7 +35,8 @@ Some forecasts explore different future scenarios of GDP, rent, wages, demograph
 
 Past recent growth, the presence of immigrants, the fraction of population older than 25 and younger than 65, low taxes, and good weather are all positively associated with population growth. If an area is growing, it’s usually because something good is happening. There are jobs, cost of living is low, the climate is nice, there’s a university, etc. These factors don’t tend to move wildly about each year; they’re pretty stable. The factors that determine where people want to live do not usually experience extreme year-over-year variation for most places. Indeed, many factors determining population growth can be extremely durable: presence of universities, presence of government centers, access to transportation networks, broad industry clusters, etc. These can be stable for decades.
 
-Feature selection:
+
+Data project:
 
 Data pipeline: There are several - many - websites with promising data and features to mine for forecasting:
 
@@ -46,22 +52,21 @@ www.easyatlas.com maps the data information layer of the physical world. In rece
 www.first.io predicts listings from real estate agents' contacts pool.
 
 
-HouseCanary comes closest to the opportunity that I see to predict changes in valuation due to new construction; infrastructure, subdivisions, even upzoning*, though in Austin that is very rare. Much of the requisite data is public, open source, e.g. https://data.austintexas.gov/Building-and-Development/Heat-Map-of-Construction-Permits-Issued-since-2010/cc88-62x4, https://data.austintexas.gov/Building-and-Development/Construction-Permits-Issued-since-2010/d792-2sc3, https://data.austintexas.gov/Building-and-Development/2014-Housing-Market-Analysis-Data-by-Zip-Code/hcnj-rei3, https://data.austintexas.gov/Building-and-Development/Affordable-Housing-Inventory-AHI-/x5p7-qyuv, https://data.austintexas.gov/Building-and-Development/Building-a-Better-Austin-Action-Steps/6s5y-evgf, https://data.austintexas.gov/Building-and-Development/Kirwan-Institute-Opportunity-Map-Data/f4c7-5ivu, https://data.austintexas.gov/Building-and-Development/neigh_zoning_summary/sjzt-gzvd, https://data.austintexas.gov/Building-and-Development/Building-Plan-Review-Projects-Submitted-for-Review/kccz-7kam et al.
+HouseCanary comes closest to the opportunity that I see to predict changes in valuation due to new construction; infrastructure, subdivisions, even upzoning, though in Austin that is very rare. 
+EDA starts with a small dataset e.g. last 30 days of construction permits to explore fields of interest. Cleaning the large dataset provides over 80K rows of good data. Plotting various fields against location and time data should identify important features.
 
+Data prep starts with cleaning the data and dropping extraneous fields; one consideration that showed up in the EDA was zero-story projects e.g. parking lots; not exactly what I was looking for, albeit still indicative of densification.
 
-Research questions: How much detail of construction projects can be inferred from open source data e.g. infrastructure and construction permits? How closely can revenue e.g. rent be inferred from same in addition to neighborhood revenue data scraped from e.g. Zillow?
+I modeled the data with random forest regressors, roughly a hundred trees. Model performance evaluated well, ~.8 accuracy, prediction, recall. This is strong enough to predict broad infrastructure needs like electricity, water, and data.
 
-Next steps: Scrape permits for new construction. Research revenue history and correlate with construction to project revenues from upcoming projects. GIS systems e.g. Grass, Postgis, Qgis.
+Presentation comprises six slides and a three minute talk including summary of data scoring. The data is open source, available online, and updated regularly; definitely reproducible, tested via k-fold cross validation
 
-Presentation via Jupyter Notebook should include text, charts, graphs. Initial classification of new residential real estate as single-family, multi-family, new, upgraded.
+Excellent data; time, location, volume, features, abundance.
 
-*Upzoning:
-http://www.mystatesman.com/news/local-govt--politics/austin-rolls-out-code-draft-questions-and-concerns-emerge/rWiVSEnMZ2g2ZZEgNISBWI/
-https://communityimpact.com/austin/northwest-austin/city-county/2017/04/24/northwest-austin-residents-fear-upzoning-6-takeaways-mondays-district-6-codenext-community-forum/
-https://nextcity.org/daily/entry/austin-codenext-land-code-zoning-draft-released
+Data indicates increased infrastructure needs most strongly in the following zip codes:
 
+Further research questions: How much detail of construction projects can be inferred from open source data e.g. infrastructure and construction permits? How closely can revenue e.g. rent be inferred from same in addition to neighborhood revenue data scraped from e.g. Zillow?
 
-I used Grass, QGIS, and Postgis; the standard GIS tools - ARCGIS and Tableau - don't run on linux.
+Presentation via Jupyter Notebook includes text, charts, graphs, maps.
 
-Feature selection, data pipeline, model fitting, data process flow, presentation dashboard, how to run the code, dependencies.
-
+Primary data is from Austin's Open Data Portal; construction permits from 2010-2017, roughly a gigabyte of data. Predicting added square footage of construction per zip code per year and consequent heat maps should be possible from the data. Tools are primarily from Anaconda Python: Pandas, matplotlib, numpy, scipy, scikit-learn; supplemented with AWS EC2 and S3.
