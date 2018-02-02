@@ -24,7 +24,7 @@ Data prep starts with cleaning the data and dropping extraneous fields; one cons
 Far and away the most important data was location - zip code, latitude, longitude - and added square feet, though fields like NumberOfFloors offered insight; zero floor projects like parking lots are different in kind from one- or multi-story projects.
 
 
-I modeled the data with random forest regressors, a hundred trees. Model performance evaluated well, .73 coefficient of determination R^2. This is strong enough to predict broad infrastructure needs like electricity, water, and data.
+I modeled the data with basic time series models - average, naive, seasonal naive, and drift -as well as a hundred tree random forest regressor. RF performance evaluated well, .73 coefficient of determination R^2. This is strong enough to predict broad infrastructure needs like electricity, water, and data. The time series models did pretty well too; drift won:
 
 Presentation comprises six slides and a three minute talk including summary of data scoring. The data is open source, available online, and updated regularly; definitely reproducible, tested via k-fold cross validation.
 
