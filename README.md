@@ -15,14 +15,16 @@ Over a hundred people move to Austin every day; predicting the shape and density
 Data project:
 
 Data pipeline: 
-Primary data is from Austin's Open Data Portal; construction permits from 2010-2017, roughly a gigabyte of data. Predicting added square footage of construction per zip code per year and consequent heat maps should be possible from the data. Tools are primarily from Anaconda Python: Pandas, matplotlib, numpy, scipy, scikit-learn; supplemented with AWS EC2 and S3. A secondary data subset, the last month of permit data, speeds EDA.
+Primary data is from Austin's Open Data Portal; construction permits from 2010-2017, roughly a gigabyte of data. Predicting added square footage of construction per zip code per year and consequent heat maps should be possible from the data and construction permit data is orders of magnitude more timely than, for example, census data. Tools are primarily from Anaconda Python: Pandas, matplotlib, numpy, scipy, scikit-learn; supplemented with AWS EC2 and S3. A secondary data subset, the last month of permit data, speeds EDA.
 
 EDA starts with a small dataset e.g. last 30 days of construction permits to explore fields of interest. Cleaning the large dataset provides over 83K rows of good data. Plotting various fields against location and time data should identify important features. Using added square footage as a proxy for population if anything makes the correlation with need for infrastructure stronger.
 
 Data prep starts with cleaning the data and dropping extraneous fields; one consideration that showed up in the EDA was zero-story projects e.g. parking lots; not exactly what I was looking for, albeit still indicative of densification.
 
+Far and away the most important data was location - zip code, latitude, longitude - and added square feet, though fields like NumberOfFloors offered insight; zero floor projects like parking lots are different in kind from one- or multi-story projects.
 
-I modeled the data with random forest regressors, roughly a hundred trees. Model performance evaluated well, ~.8 accuracy, prediction, recall. This is strong enough to predict broad infrastructure needs like electricity, water, and data.
+
+I modeled the data with random forest regressors, a hundred trees. Model performance evaluated well, .73 coefficient of determination R^2. This is strong enough to predict broad infrastructure needs like electricity, water, and data.
 
 Presentation comprises six slides and a three minute talk including summary of data scoring. The data is open source, available online, and updated regularly; definitely reproducible, tested via k-fold cross validation.
 
