@@ -50,7 +50,6 @@ The zip codes with the most construction and consequent increased infrastructure
 
 In total, 1309787870 square feet were added to 52 zip codes, for an average add of 25188228 square feet and a standard deviation of 27290 square feet.
 
-<img src="images/zipcounts.png" height=99%, width=99%, alt="Zip">
 
 <img src="images/img4.png" height=99%, width=99%, alt="map">
 
