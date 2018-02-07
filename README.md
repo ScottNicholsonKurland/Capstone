@@ -15,6 +15,8 @@ Over a hundred people move to Austin every day. Predicting the shape and density
 #### Data pipeline: 
 The primary data is from the city of Austin's Open Data Portal; it consists of over 1.8 million construction permits from the period 2010-2017, and is roughly a gigabyte. I chose to use construction permit data because it is updated daily rather than, for example, census data. The tools that I used are primarily from Anaconda Python: Pandas, matplotlib, numpy, scipy, scikit-learn; supplemented with Amazon Web Services (AWS) EC2 and S3.
 
+<img src="images/img0.png" height=99%, width=99%, alt="Tools">
+
 
 #### Exploratory Data Analysis (EDA)
 
@@ -47,6 +49,8 @@ The zip codes with the most construction and consequent increased infrastructure
 - 78747     25
 
 In total, 1309787870 square feet were added to 52 zip codes, for an average add of 25188228 square feet and a standard deviation of 27290 square feet.
+
+<img src="images/img4.png" height=99%, width=99%, alt="map">
 
 I modeled the data with a hundred tree random forest regressor. RF performance evaluated well, with an R squared value of .72. This is strong enough to predict measures of infrastructure needs like electricity, water, and data.
 
