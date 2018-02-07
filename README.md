@@ -30,7 +30,7 @@ Far and away the most important data was location - zip code, latitude, longitud
 ### Results
 
 The zip codes with the most construction and consequent increased infrastructure needs were:
-78701    106785051 square feet
+- 78701    106785051 square feet
 78704     89346917 square feet
 78758     75934839 square feet
 78748     70908709 square feet
