@@ -1,49 +1,74 @@
 # Capstone
 
 
-Author: Scott Kurland
-January 2018
-
-Forecasting real estate growth and densification in Austin by zip code.
+#### Author: Scott Kurland
+#### January 2018 Galvanize Data Science Immersive
 
 
-Motivation:
-
-Over a hundred people move to Austin every day; predicting the shape and density of the city has practical applications regarding utilities and infrastructure, as well as development and design; current laws enforcing 40' front yards make sprawl inevitable, for example.  Tripling the global urban land area of 2000 by 2030 is predicted; Austin will grow from its current size of 950K people and 272 square miles. The Austin metropolitan area is almost 4300 square miles, room to grow, and a population over 2 million. Austin will likely add another 114K apartments by 2030.
+# Forecasting real estate growth and densification in Austin by zip code.
 
 
-Data project:
+## Background and Motivation:
 
-Data pipeline: 
+Over a hundred people move to Austin every day. Predicting the shape and density of the city has practical applications regarding utilities and infrastructure, as well as development and design. Current laws enforcing 40' front yards make sprawl inevitable, for example. Austin will grow from its current size of 950K people and 272 square miles. There is room to grow. The Austin metropolitan area is almost 4300 square miles and a population over 2 million.
+
+
+### Data project:
+
+#### Data pipeline: 
 Primary data is from Austin's Open Data Portal; construction permits from 2010-2017, roughly a gigabyte of data. Predicting added square footage of construction per zip code per year and consequent heat maps should be possible from the data and construction permit data is orders of magnitude more timely than, for example, census data. Tools are primarily from Anaconda Python: Pandas, matplotlib, numpy, scipy, scikit-learn; supplemented with AWS EC2 and S3. A secondary data subset, the last month of permit data, speeds EDA.
 
-EDA starts with a small dataset e.g. last 30 days of construction permits to explore fields of interest. Cleaning the large dataset provides over 83K rows of good data. Plotting various fields against location and time data should identify important features. Using added square footage as a proxy for population if anything makes the correlation with need for infrastructure stronger.
+
+#### EDA
+EDA starts with a small dataset e.g. last 30 days of construction permits to explore fields of interest. Cleaning the large dataset provides over 241K rows of good data from a sparse dataset of over 1.8 million rows. Plotting various fields against location and time data should identify important features. Using added square footage as a proxy for population if anything makes the correlation with need for infrastructure stronger.
 
 Data prep starts with cleaning the data and dropping extraneous fields; one consideration that showed up in the EDA was zero-story projects e.g. parking lots; not exactly what I was looking for, albeit still indicative of densification.
 
 Far and away the most important data was location - zip code, latitude, longitude - and added square feet, though fields like NumberOfFloors offered insight; zero floor projects like parking lots are different in kind from one- or multi-story projects.
 
 
-I modeled the data with basic time series models - average, naive, seasonal naive, and drift -as well as a hundred tree random forest regressor. RF performance evaluated well, .73 coefficient of determination R^2. This is strong enough to predict broad infrastructure needs like electricity, water, and data. The time series models did pretty well too; drift won:
+### Results
 
-Presentation comprises six slides and a three minute talk including summary of data scoring. The data is open source, available online, and updated regularly; definitely reproducible, tested via k-fold cross validation.
+The zip codes with the most construction and consequent increased infrastructure needs were:
+78701    106785051 square feet
+78704     89346917 square feet
+78758     75934839 square feet
+78748     70908709 square feet
+78744     60277889 square feet
+78705     58428844 square feet
+78717     55776922 square feet
+78723     47604214 square feet
+78703     45576134 square feet
+78702     45063719 square feet
+78754     44069518 square feet
+78741     42466443 square feet
+78735     39322965 square feet
+78745     38277519 square feet
+78753     36109552 square feet
+78739     31989448 square feet
+78746     30379981 square feet
+78747     25113074 square feet.
+
+In total, 1309787870 square feet were added to 52 zip codes, for an average add of 25188228 square feet and a standard deviation of 27290 square feet.
+
+I modeled the data with a hundred tree random forest regressor. RF performance evaluated well, .72 coefficient of determination R^2. This is strong enough to predict broad infrastructure needs like electricity, water, and data.
+
+Presentation comprises six slides and a three minute talk including summary of data scoring. The data is open source, available online, and updated regularly; definitely reproducible, tested with train/test split validation.
 
 Excellent data; time, location, volume, features, abundance.
 
 Presentation via Jupyter Notebook includes text, charts, graphs, maps.
 
-Data indicates increased infrastructure needs most strongly in the following zip codes:
 
-Further research questions: How much detail of construction projects can be inferred from open source data e.g. infrastructure and construction permits? How closely can revenue e.g. rent be inferred from same in addition to neighborhood revenue data scraped from e.g. Zillow? There are several - many - websites with promising data and features to mine for forecasting:
+## Future questions:
 
-www.zillow.com: Buy, rent, sell, estimate, mortgages, agent finder, home design.
-www.trulia.com: Buy, rent.
-www.redfin.com: Buy, sell, agents.
-www.opendoor.com: Sell in three days without listing or showing.
-www.mashvisor.com: Analytics investment property search.
-www.housingrebound.com: Discover regions that have been hit hard in the past and are on the path to recovery with strong signs of year over year growth. Price to Rent Ratio: crosslist areas appreciating in value with proportionate rental income. Best Schools: factor ratings of schools to find soaring neighborhoods and provide a good experience to your renters.
-www.housecanary.com: Valuations, comps, appraisals, analytics, *forecasting*: See how prices will change up to 36 months into the future; Across all markets, our home price index (HPI) forecasting models explain more than 95% of the past variability in price changes (R2>0.95). Our models yield highly accurate out-of-sample HPI forecasts in the near-term and long-term, and they continue to improve through our ongoing research and development. HPI Forecast Error Rate .7% 
-www.easyatlas.com maps the data information layer of the physical world. In recent years, we've seen an explosion in the availability and digitization of geospatial information across all sectors of the local economy. We built a platform that merges, synchronizes, and updates all of this. On top of our data platform, we built an analytical layer using the latest advancements in machine learning. This gives us the ability to parse insights that will drive superior investment decisions.
+How much detail of construction projects can be inferred from open source data e.g. infrastructure and construction permits? How closely can revenue e.g. rent be inferred from same in addition to neighborhood revenue data scraped from e.g. Zillow? Several websites have promising data and features to mine for forecasting e.g. www.zillow.com, www.trulia.com, www.redfin.com, www.opendoor.com, www.mashvisor.com, www.housingrebound.com, www.housecanary.com, www.easyatlas.com.
 
 
-HouseCanary comes closest to the opportunity that I see to predict changes in valuation due to new construction; infrastructure, subdivisions, even upzoning, though in Austin that is very rare.
+HouseCanary comes closest to the opportunity that I see to predict changes in valuation due to new construction, infrastructure, subdivisions, even rare-in-Austin upzoning.
+
+## References
+
+2010 Census of Population and Housing, Population and Housing Unit Counts, CPH-2-5. U.S. Government Printing Office, Washington, DC: U.S. Census Bureau. 2012.
+
+"Seeing like a state: How Certain Schemes to Improve the Human Condition Have Failed" by James C. Scott, Publisher : Yale University Press
