@@ -45,7 +45,7 @@ In total, 1309787870 square feet were added to 52 zip codes, for an average add 
 
 I modeled the data with a hundred tree random forest regressor. RF performance evaluated well, with an R squared value of .72. This is strong enough to predict measures of infrastructure needs like electricity, water, and data. A monthly time series split returns an R squared of .66.
 
-<img src="images/forest.jpg" height=99%, width=99%, alt="zips">
+<img src="images/forest.jpeg" height=99%, width=99%, alt="zips">
 
 My presentation comprising six slides and a three minute talk including summary of data scoring is available here, as well as a Jupyter with more EDA. The data is open source, available online at the city of Austin Open Data Portal, and updated regularly.
 
