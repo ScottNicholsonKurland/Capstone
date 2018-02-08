@@ -34,19 +34,7 @@ The zip codes with the most construction and consequent increased infrastructure
 - 78758     75
 - 78748     70
 - 78744     60
-- 78705     58
-- 78717     55
-- 78723     47
-- 78703     45
-- 78702     45
-- 78754     44
-- 78741     42
-- 78735     39
-- 78745     38
-- 78753     36
-- 78739     31
-- 78746     30
-- 78747     25
+
 
 In total, 1309787870 square feet were added to 52 zip codes, for an average add of 25188228 square feet and a standard deviation of 27290 square feet.
 
