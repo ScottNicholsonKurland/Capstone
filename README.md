@@ -29,11 +29,11 @@ EDA revealed that the most important fields were location based (including zip c
 
 The zip codes with the most construction and consequent increased infrastructure needs were, in millions of square feet:
 
-- 78701: Downtown       106
-- 78704: Near South     89
-- 78758: North          75
-- 78748: Far South      70
-- 78744: Southeast      60
+- 78701: Downtown                   106
+- 78704: Near South                 89
+- 78758: North                      75
+- 78748: Far South                  70
+- 78744: Southeast                  60
 
 
 In total, 1,309,787,870 square feet were added to 52 zip codes, for an average add of 25,188,228 square feet and a standard deviation of 27,290 square feet.
