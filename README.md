@@ -1,66 +1,109 @@
-# Forecasting real estate growth and densification in Austin by zip code.
+# Forecasting Urban Growth in Austin with Construction Permit Data
 
+This project analyzes City of Austin construction permit data to identify where new development is concentrated and to model added square footage as a proxy for future growth pressure. The core idea is that construction permits update more frequently than census data and may provide an earlier signal of where infrastructure demand is increasing. The analysis combines exploratory data analysis with a random forest regressor trained on permit-level features such as ZIP code, permit class, council district, floors, housing units, and job valuation. :contentReference[oaicite:1]{index=1}
 
-#### Author: Scott Kurland
-#### January 2018 Galvanize Data Science Immersive
+## Project Objective
 
+Austin has grown rapidly for years, and the location and intensity of new construction affects utilities, transportation, housing, and public infrastructure planning. This project asks two related questions:
 
-## Background and Motivation:
+1. Which Austin ZIP codes show the greatest concentration of new construction?
+2. Can permit-level features help predict added square footage (`TotalNewAddSQFT`) as a rough proxy for future growth intensity?
 
-Over a hundred people move to Austin every day. Predicting the shape and density of the city has practical applications regarding utilities and infrastructure, as well as implications for development and design. Current laws enforcing 40' front yard depth make sprawl inevitable, for example, trading density for aesthetics. Austin will grow from its current size of 950,000 people and 272 square miles. There is room to grow into the Austin metropolitan area of 4,300 square miles and a population of over 2 million people.
+This is a descriptive and predictive project, not a causal one. The goal is to identify patterns in permit activity, not to prove that permits directly cause infrastructure demand. :contentReference[oaicite:2]{index=2}
 
+## Dataset
 
-### Data project:
+**Source:** City of Austin Open Data Portal  
+**Original scope described in project materials:** more than 1.8 million construction permit records from 2010–2017  
+**Working analytical subset described in the project:** about 241,000 records after filtering to rows with positive added square footage :contentReference[oaicite:3]{index=3}
 
-#### Data pipeline: 
-The data is from the city of Austin's Open Data Portal. It consists of over 1.8 million construction permits from the period 2010-2017, and is roughly a gigabyte. I chose to use construction permit data because it is updated daily rather than, for example, census data. The tools that I used are primarily from Anaconda Python: pandas, matplotlib, numpy, scipy, scikit-learn, supplemented with Amazon Web Services (AWS) EC2 and S3.
+Key fields used in the analysis include:
 
-<img src="images/dst.png" height=99%, width=99%, alt="Tools">
+- `TotalNewAddSQFT`
+- `OriginalZip`
+- `Latitude`
+- `Longitude`
+- `PermitClass`
+- `StatusCurrent`
+- `CouncilDistrict`
+- `NumberOfFloors`
+- `HousingUnits`
+- `TotalJobValuation`
 
+## Analytical Approach
 
-#### Exploratory Data Analysis (EDA)
+### 1. Data cleaning
+The exploratory analysis script filters the permit data to rows with positive `TotalNewAddSQFT`, coerces numeric fields into usable form, normalizes valuation fields, and removes rows missing key geographic fields needed for mapping and ZIP-level summaries.
 
-Cleaning the dataset, e.g. eliminating rows without added square footage, provided over 241 thousand rows of good data from a sparse dataset of over 1.8 million rows. Plotting various fields against location and time data identified important features like NumberOfFloors. I speculated that using added square footage as a proxy for population may correlate as or more strongly with measures reflecting the need for infrastructure.
+### 2. Exploratory data analysis
+EDA focuses on:
 
-EDA revealed that the most important fields were location based (including zip code, latitude, longitude),  and added square feet,  although fields like the number of floors also offered insight. One additional interesting result that showed up in the EDA was the presence of zero-story projects e.g. parking lots.
+- permit counts by ZIP code
+- permit counts by number of floors
+- most common permit classes
+- job valuation distribution
+- geographic distribution of added square footage
 
+### 3. Predictive modeling
+The modeling script treats `TotalNewAddSQFT` as the target variable and uses a random forest regressor to model it from permit metadata. The pipeline includes:
 
-### Results
+- numeric imputation
+- categorical imputation
+- one-hot encoding for categorical features
+- random forest regression
+- grid search cross-validation
+- train/test evaluation using MAE and R²
 
-The zip codes with the most construction and consequent increased infrastructure needs were, in millions of square feet:
+## Key Findings
 
-- 78701: Downtown                   106
-- 78704: Near South                 89
-- 78758: North                      75
-- 78748: Far South                  70
-- 78744: Southeast                  60
+Based on the project’s current documented results:
 
+- The highest-construction ZIP codes were reported as:
+  - **78701**: 106 million square feet
+  - **78704**: 89 million
+  - **78758**: 75 million
+  - **78748**: 70 million
+  - **78744**: 60 million :contentReference[oaicite:4]{index=4}
 
-In total, 1,309,787,870 square feet were added to 52 zip codes, for an average add of 25,188,228 square feet and a standard deviation of 27,290 square feet.
+- The project reports that location-based variables such as ZIP code, latitude, and longitude were among the most informative features, with `NumberOfFloors` also providing useful signal. :contentReference[oaicite:5]{index=5}
 
-<img src="images/zipcounts.png" height=120%, width=99%, alt="zips">
+- A random forest regressor reportedly achieved an **R² of 0.72**, and a monthly time-series split reportedly returned **R² = 0.66**. Those values suggest useful predictive signal, though they should be interpreted cautiously until the pipeline and validation split are fully documented in a reproducible script. :contentReference[oaicite:6]{index=6}
 
+## Why Permit Data?
 
-<img src="images/conmap.png" height=99%, width=99%, alt="map">
+Construction permit data updates much more frequently than census releases. That makes it potentially useful for detecting neighborhood-level development patterns earlier than slower demographic datasets. In this project, added square footage is treated as a rough proxy for construction intensity and possible downstream infrastructure pressure. :contentReference[oaicite:7]{index=7}
 
-I modeled the data with a hundred tree random forest regressor. RF performance evaluated well, with an R squared value of 0.72. This is strong enough to predict measures of infrastructure needs like electricity, water, and data. A monthly time series split returns an R squared value of 0.66.
+## Limitations
 
-<img src="images/forest.jpeg" height=99%, width=99%, alt="Random Forest">
+This project has several important limitations:
 
-My presentation comprising six slides and a three minute talk including summary of data scoring is available here, as well as a Jupyter Notebook with more EDA. The data is open source, available online at the city of Austin Open Data Portal, and updated regularly.
+- **Proxy target:** Added square footage is not the same as population growth, infrastructure load, or economic value. It is only a rough signal.
+- **Selection effects:** Filtering to positive `TotalNewAddSQFT` excludes some permit categories and may bias the analytical sample.
+- **Observational data:** The project identifies patterns and predictive relationships, not causal effects.
+- **Validation detail:** Reported model performance is promising, but the repository should document the validation method more explicitly to support reproducibility.
+- **Repository modernization:** Some older files in the repository predate the cleaned portfolio version and should be removed or archived before final publication. :contentReference[oaicite:8]{index=8}
 
+## Repository Structure
 
-## Future questions:
+Suggested cleaned structure:
 
-How much detail of construction projects can be inferred from open source data, e.g. infrastructure and construction permits? How closely can revenue, e.g. rent, be inferred from same in addition to neighborhood revenue data scraped from e.g. Zillow? Several websites have promising data and features to mine for forecasting e.g. www.zillow.com, www.trulia.com, www.redfin.com, www.opendoor.com, www.mashvisor.com, www.housingrebound.com, www.housecanary.com, and www.easyatlas.com.
-
-
-HouseCanary comes closest to the opportunity that I see to predict changes in valuation due to new construction, infrastructure, subdivisions, even rare-in-Austin upzoning.
-
-## References
-
-2010 Census of Population and Housing, Population and Housing Unit Counts, CPH-2-5. U.S. Government Printing Office, Washington, DC: U.S. Census Bureau. 2012.
-
-"Seeing like a state: How Certain Schemes to Improve the Human Condition Have Failed" by James C. Scott, Publisher : Yale University Press
-
-<img src="images/img1.png" height=99%, width=99%, alt="Scott">
+```text
+Capstone/
+├── README.md
+├── LICENSE
+├── requirements.txt
+├── data/
+│   ├── sample_permits.csv
+│   └── README.md
+├── notebooks/
+│   └── austin_growth_analysis.ipynb
+├── src/
+│   ├── eda.py
+│   └── model.py
+├── images/
+│   ├── zip_code_counts.png
+│   ├── square_footage_map.png
+│   ├── permit_class_counts.png
+│   └── model_results.png
+└── presentation/
+    └── capstone_presentation.pdf
