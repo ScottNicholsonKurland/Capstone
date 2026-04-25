@@ -1,6 +1,6 @@
 # Forecasting Urban Growth in Austin with Construction Permit Data
 
-This project analyzes City of Austin construction permit data to identify where new development is concentrated and to model added square footage as a proxy for future growth pressure. The core idea is that construction permits update more frequently than census data and may provide an earlier signal of where infrastructure demand is increasing. The analysis combines exploratory data analysis with a random forest regressor trained on permit-level features such as ZIP code, permit class, council district, floors, housing units, and job valuation. :contentReference[oaicite:1]{index=1}
+This project analyzes City of Austin construction permit data to identify where new development is concentrated and to model added square footage as a proxy for future growth pressure. The core idea is that construction permits update more frequently than census data and may provide an earlier signal of where infrastructure demand is increasing. The analysis combines exploratory data analysis with a random forest regressor trained on permit-level features such as ZIP code, permit class, council district, floors, housing units, and job valuation.
 
 ## Project Objective
 
