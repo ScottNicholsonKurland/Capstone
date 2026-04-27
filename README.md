@@ -1,23 +1,30 @@
 # Forecasting Urban Growth in Austin with Construction Permit Data
 
-This project analyzes City of Austin construction permit data to identify where new development is concentrated and to model added square footage as a proxy for future growth pressure. The core idea is that construction permits update more frequently than census data and may provide an earlier signal of where infrastructure demand is increasing. The analysis combines exploratory data analysis with a random forest regressor trained on permit-level features such as ZIP code, permit class, council district, floors, housing units, and job valuation.
+## Executive Summary
 
-## Project Objective
+This project analyzes City of Austin construction permit data to identify where new development is concentrated and to test whether permit-level features can help model added square footage.
 
-Austin has grown rapidly for years, and the location and intensity of new construction affects utilities, transportation, housing, and public infrastructure planning. This project asks two related questions:
+The project is best understood as a **descriptive analysis plus predictive prototype**. It uses construction permits as a faster-updating signal than census data, while treating model results cautiously.
 
-1. Which Austin ZIP codes show the greatest concentration of new construction?
-2. Can permit-level features help predict added square footage (`TotalNewAddSQFT`) as a rough proxy for future growth intensity?
+## Business Question
 
-This is a descriptive and predictive project, not a causal one. The goal is to identify patterns in permit activity, not to prove that permits directly cause infrastructure demand.
+Where is construction activity concentrated in Austin, and can permit metadata help predict added square footage as a proxy for development intensity?
+
+## Tools Used
+
+- Python
+- pandas
+- matplotlib
+- scikit-learn
+- Jupyter Notebook
 
 ## Dataset
 
 **Source:** City of Austin Open Data Portal  
-**Original scope described in project materials:** more than 1.8 million construction permit records from 2010–2017  
-**Working analytical subset described in the project:** about 241,000 records after filtering to rows with positive added square footage.
+**Original project scope:** more than 1.8 million construction permit records from 2010–2017  
+**Working analytical subset:** about 241,000 records after filtering to rows with positive added square footage
 
-Key fields used in the analysis include:
+Key fields used:
 
 - `TotalNewAddSQFT`
 - `OriginalZip`
@@ -30,46 +37,81 @@ Key fields used in the analysis include:
 - `HousingUnits`
 - `TotalJobValuation`
 
+## Project Objective
+
+Austin growth affects housing, utilities, transportation, and infrastructure planning. This project asks:
+
+1. Which Austin ZIP codes show the greatest concentration of new construction?
+2. Which permit-level features are most useful for modeling added square footage?
+
+This is **not** a causal analysis. It does not prove that permits cause infrastructure demand. It identifies patterns in construction activity.
+
 ## Analytical Approach
 
-### 1. Data cleaning
-The exploratory analysis script filters the permit data to rows with positive `TotalNewAddSQFT`, coerces numeric fields into usable form, normalizes valuation fields, and removes rows missing key geographic fields needed for mapping and ZIP-level summaries.
+### 1. Data Cleaning
 
-### 2. Exploratory data analysis
+The analysis filters permit records to rows with positive `TotalNewAddSQFT`, coerces numeric fields, normalizes valuation fields, and removes records missing key geographic fields needed for ZIP-level and map-based analysis.
+
+### 2. Exploratory Data Analysis
+
 EDA focuses on:
 
 - permit counts by ZIP code
+- added square footage by ZIP code
 - permit counts by number of floors
 - most common permit classes
 - job valuation distribution
 - geographic distribution of added square footage
 
-### 3. Predictive modeling
-The modeling script treats `TotalNewAddSQFT` as the target variable and uses a random forest regressor to model it from permit metadata. The pipeline includes:
+### 3. Predictive Modeling
+
+The modeling script treats `TotalNewAddSQFT` as the target variable and uses a random forest regressor with permit-level metadata.
+
+The pipeline includes:
 
 - numeric imputation
 - categorical imputation
-- one-hot encoding for categorical features
+- one-hot encoding
 - random forest regression
 - grid search cross-validation
-- train/test evaluation using MAE and R²
+- train/test evaluation with MAE and R²
 
 ## Key Findings
 
-Based on the project’s current documented results:
+The project currently reports the following high-construction ZIP codes by added square footage:
 
-- The highest-construction ZIP codes were reported as:
-  - **78701**: 106 million square feet
-  - **78704**: 89 million
-  - **78758**: 75 million
-  - **78748**: 70 million
-  - **78744**: 60 million
+| ZIP Code | Reported Added Square Footage |
+|---|---:|
+| 78701 | 106 million |
+| 78704 | 89 million |
+| 78758 | 75 million |
+| 78748 | 70 million |
+| 78744 | 60 million |
 
-- The project reports that location-based variables such as ZIP code, latitude, and longitude were among the most informative features, with `NumberOfFloors` also providing a useful signal.
+The project also reports that location-based fields such as ZIP code, latitude, and longitude are informative, with `NumberOfFloors` also contributing useful signal.
 
-- A random forest regressor reportedly achieved an **R² of 0.72**, and a monthly time-series split reportedly returned **R² = 0.66**. Those values suggest a useful predictive signal, though they should be interpreted cautiously until the pipeline and validation split are fully documented in a reproducible script.
+## Model Interpretation
+
+The README previously reported:
+
+- random forest R² of 0.72
+- monthly time-series split R² of 0.66
+
+Those values suggest useful predictive signal, but they should be treated as provisional until the full validation strategy is documented end-to-end in reproducible scripts.
 
 ## Why Permit Data?
 
-Construction permit data updates much more frequently than census releases. That makes it potentially useful for detecting neighborhood-level development patterns earlier than slower demographic datasets. In this project, added square footage is treated as a rough proxy for construction intensity and possible downstream infrastructure pressure.
+Construction permits update more frequently than census releases. That makes them useful for detecting neighborhood-level development patterns earlier than slower demographic datasets.
 
+In this project, added square footage is used as a rough proxy for construction intensity and possible downstream infrastructure pressure.
+
+## Portfolio Value
+
+This project demonstrates:
+
+- Python EDA
+- civic/open-data analysis
+- feature engineering
+- regression modeling
+- cautious interpretation of model performance
+- communication of limitations
